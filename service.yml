@@ -1,0 +1,24 @@
+- hosts: all
+  tasks: 
+   - name: "creating document root"
+     file:
+         path: /var/www/ajay1
+         state: directory
+   - name: "copying webpage to document root"
+     copy:
+         content: "hello how are you"
+         dest: /var/www/ajay1/index.html
+
+   - name: "copy conf file"
+     copy: 
+        src: ajay123.conf
+        dest: /etc/httpd/conf.d/
+     notify: service restart
+
+
+  
+  handlers:
+   - name: service restart
+     service: 
+         name: httpd
+         state: restarted
